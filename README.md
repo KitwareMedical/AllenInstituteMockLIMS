@@ -6,86 +6,79 @@ Tested on Python 3.8 with Flask 1.1.2
 
 ## Fetch Specimen Metadata
 
+`GET` `/specimen_metadata/view`
+
 Returns json metadata of a specimen based on the kind of metadata.
 
-### URL
+### Query Parameters
 
-`/specimen_metadata/view`
- 
-### Method
+|Parameter|Type|Description|
+|---|---|---|
+|`specimen_id`|`integer`|Unique id property of the Specimen entry in the LIMS that the metadata is associated with|
+|`kind`|`string`|The kind of metadata that is to be retrieved (eg. "IVSCC cell locations")|
+|`version_number` (opt.)|`integer`|The version of the metadata, which may be defined by the kind of metadata|
 
-`GET`
+### Response
 
-### URL Params
+#### Success `200`
 
-#### Required
-
-```
-specimen_id=[integer] - Unique id property of the Specimen entry in the LIMS that the metadata is associated with
-kind=[string] - The kind of metadata that is to be retrieved (eg. "IVSCC cell locations")
-```
-
-#### Optional
-
-```
-version_number=[integer] - The version of the metadata, which may be defined by the kind of metadata
+```json
+{
+  "version_number": 2,
+  "data": {"foo": "bar"}
+}
 ```
 
-### Success Response
+#### Error
 
-```
-Code: 200 - Content: { "version_number": 2, "data": { "foo" : "bar" } }
-```
-
-### Error Responses
-
-```
-Code: 500 - Content: { "status": 500, "message": "Something went wrong" }
-Code: 404 - Content: { "status": 404, "message": "Record not found" }
-Code: 400 - Content: { "status": 400, "message": "Param foo is missing" }
-message values in the error response are examples
-```
+|Status Code|Body|
+|---|---|
+|`500`|`{ "status": 500, "message": "Something went wrong" }`|
+|`404`|`{ "status": 404, "message": "Record not found" }`|
+|`400`|`{ "status": 400, "message": "Param foo is missing" }`|
 
 ### Sample Call
 
-`/specimen_metadata/view?specimen_id=1234&kind=IVSCC%20cell%20locations`
+Request:
 
-`/specimen_metadata/view?specimen_id=1234&kind=IVSCC%20cell%20locations&version_number=3`
+`GET` `/specimen_metadata/view?specimen_id=1234&kind=IVSCC%20cell%20locations`
+
+Response:
+
+```json
+{
+  "version_number": 2,
+  "data": {
+    "specimen_id": 1234,
+    "kind": "IVSCC cell locations",
+    "data": {"foo": "bar"}
+  }
+}
+```
 
 ### Notes
 
-```
 If version_number is not specified, then the current version will be returned
-```
 
 ## Store Specimen Metadata
 
+`POST` `/specimen_metadata/store`
+
 Stores json metadata of a specimen based on the kind of metadata.
-
-### URL
-
-`/specimen_metadata/store`
-
-### Method
-
-`POST`
 
 ### URL Params
 
-```
-NONE
-If URL params are provided, the request will be rejected with code 400
-```
+None. If URL params are provided, the request will be rejected with code 400
 
 ### POST body
 
 #### Required:
 
-```
-specimen_id=[integer] - Unique id property of the Specimen entry in the LIMS that the metadata is associated with
-kind=[string] - The kind of metadata that is to be retrieved (eg. "IVSCC cell locations")
-data=[object] - The metadata to be stored - this should be a valid JSON object
-```
+|Value|Type|Description|
+|---|---|---|
+|`specimen_id`|`integer`|Unique id property of the Specimen entry in the LIMS that the metadata is associated with|
+|`kind`|`string`|The kind of metadata that is to be retrieved (eg. "IVSCC cell locations")|
+|`data`|`object`|The metadata to be stored. This should be a vaid JSON object|
 
 #### Example Body:
 
@@ -93,43 +86,54 @@ data=[object] - The metadata to be stored - this should be a valid JSON object
 {
     "specimen_id": 1234,
     "kind": "IVSCC cell locations",
-    "data": {
-        "foo": "bar"
-    }
+    "data": {"foo": "bar"}
 }
 ```
 
-#### Example Body:
+### Headers
+
+|Header|Value|
+|---|---|
+|`Content-Type`|`application/json`|
+
+### Response
+
+#### Success `200`
 
 ```json
 {
-    "specimen_id": 1234,
-    "kind": "IVSCC expected cell count",
-    "data": 2
+  "id": 1234,
+  "version_number": 2
 }
 ```
 
-### Required Headers
+### Error
 
-```
-Content-Type: application/json
-```
-
-### Success Response
-
-```
-Code: 200 - Content: { "id": 1234, "version_number": 2 }
-```
-
-### Error Responses
-
-```
-Code: 500 - Content: { "status": 500, "message": "Something went wrong" }
-Code: 404 - Content: { "status": 404, "message": "Record not found" }
-Code: 400 - Content: { "status": 400, "message": "Param foo is missing" }
-message values in the error response are examples
-```
+|Status Code|Body|
+|---|---|
+|`500`|`{"status": 500, "message": "Something went wrong"}`|
+|`404`|`{"status": 404, "message": "Record not found"}`|
+|`400`|`{"status": 400, "message": "Param foo is missing"}`|
 
 ### Sample Call
 
-`/specimen_metadata/store`
+Request: 
+
+`POST` `/specimen_metadata/store`
+
+```json
+{
+  "specimen_id": 1234,
+  "kind": "IVSCC cell locations",
+  "data": {"foo": "bar"}
+}
+```
+
+Response: 
+
+```json
+{
+  "id": 1234,
+  "version_number": 2
+}
+```
