@@ -1,4 +1,4 @@
-# lims-mock
+# Allen Institute Mock LIMS implementation
 
 Tested on Python 3.8 with Flask 1.1.2
 
