@@ -15,11 +15,7 @@ class Model:
   def view(self, specimen_id):
     value = self.content[specimen_id]
 
-    return {
-      'kind': self.kind,
-      'specimen_id': specimen_id,
-      'data': value
-    }
+    return value
 
   def store(self, key, value):
     self.content[key] = value

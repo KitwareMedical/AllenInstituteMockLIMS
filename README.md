@@ -48,11 +48,7 @@ Response:
 ```json
 {
   "version_number": 2,
-  "data": {
-    "specimen_id": 1234,
-    "kind": "IVSCC cell locations",
-    "data": {"foo": "bar"}
-  }
+  "data": {"foo": "bar"}
 }
 ```
 
