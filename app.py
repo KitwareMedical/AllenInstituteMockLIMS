@@ -38,9 +38,11 @@ def view():
   kind = request.args['kind']
   specimen_id = int(request.args['specimen_id'])
 
-  result = models[kind].view(specimen_id)
-
-  return {'version_number': 2, 'data': result}
+  try:
+    result = models[kind].view(specimen_id)
+    return {'version_number': 2, 'data': result}
+  except KeyError:
+    return {'status': 404, 'message': f'No annotations for specimen {specimen_id}'}, 404
 
 
 @app.route('/specimen_metadata/store', methods=['POST'])
