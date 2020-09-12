@@ -2,6 +2,29 @@
 
 Tested on Python 3.8 with Flask 1.1.2
 
+# Getting Started
+
+1. Download source
+
+    ```bash
+    git clone https://github.com/KitwareMedical/AllenInstituteMockLIMS
+    cd AllenInstituteMockLIMS
+    ```
+
+2. Create virtual environment
+
+3. Install requirements
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Start the flask application
+
+    ```bash
+    python -m flash run
+    ```
+
 # Endpoints:
 
 ## Fetch Specimen Metadata
