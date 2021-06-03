@@ -13,6 +13,11 @@ Tested on Python 3.8 with Flask 1.1.2
 
 2. Create virtual environment
 
+    ```bash
+    python3 -m venv venv
+    . venv/bin/activate
+    ```
+
 3. Install requirements
 
     ```bash
