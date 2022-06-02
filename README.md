@@ -27,7 +27,7 @@ Tested on Python 3.8 with Flask 1.1.2
 4. Start the flask application
 
     ```bash
-    python -m flash run
+    python -m flask run
     ```
 
 # Endpoints:
