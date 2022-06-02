@@ -25,6 +25,7 @@ class Model:
 
 models = [
   Model('IVSCC cell locations', defaults.location),
+  Model('IVSCC tissue review', defaults.location),
   Model('IVSCC expected cell count', 0)
 ]
 
